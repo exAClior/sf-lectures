@@ -84,6 +84,8 @@ Definition orb (b1:bool) (b2:bool) : bool :=
   | true => true
   | false => b2
   end.
+(** You could also do Definition orb (b1 b2 : bool) : bool
+    := if b1 then true else b2. *)
 
 (** Note the syntax for defining multi-argument
     functions ([andb] and [orb]).  *)
@@ -138,17 +140,21 @@ Definition orb' (b1:bool) (b2:bool) : bool :=
     skip over [simpl] and go directly to [reflexivity]. We'll
     explain this phenomenon later in the chapter. *)
 
-Definition nandb (b1:bool) (b2:bool) : bool
-  (* REPLACE THIS LINE WITH ":= _your_definition_ ." *). Admitted.
+Definition nandb (b1:bool) (b2:bool) : bool :=
+  match b1 with
+  | true => negb b2
+  | false => true
+  end.
 
 Example test_nandb1:               (nandb true false) = true.
-(* FILL IN HERE *) Admitted.
+Proof. simpl. reflexivity. Qed.
 Example test_nandb2:               (nandb false false) = true.
-(* FILL IN HERE *) Admitted.
+Proof. simpl. reflexivity. Qed.
 Example test_nandb3:               (nandb false true) = true.
-(* FILL IN HERE *) Admitted.
+Proof. simpl. reflexivity. Qed.
 Example test_nandb4:               (nandb true true) = false.
-(* FILL IN HERE *) Admitted.
+Proof. simpl. reflexivity. Qed.
+
 (** [] *)
 
 (** Most exercises are omitted from the "terse" version of the
@@ -166,6 +172,9 @@ Example test_nandb4:               (nandb true true) = false.
 
 Check true.
 (* ===> true : bool *)
+
+Check monday.
+(* ===> monday : day *)
 
 (** If the expression after [Check] is followed by a colon and a type,
     Coq will verify that the type of the expression matches the given
@@ -263,6 +272,7 @@ End Playground.
 Definition b : bool := true.
 
 Check Playground.b : rgb.
+
 Check b : bool.
 
 (* ================================================================= *)
@@ -416,7 +426,7 @@ Notation "x * y" := (mult x y)
                        : nat_scope.
 
 Check ((0 + 1) + 1) : nat.
-
+Check ((0 + 1) - 1) = 0.
 (** When we say that Coq comes with almost nothing built-in, we really
     mean it: even equality testing is a user-defined operation!
 
