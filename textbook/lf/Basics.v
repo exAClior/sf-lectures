@@ -1333,28 +1333,24 @@ Qed.
 
 Theorem andb_true_elim2 : forall b c : bool,
   andb b c = true -> c = true.
+
 Proof.
   intros b c.
 
   {destruct b eqn:Eb.
-
      {destruct c eqn:Ec.
-
-      {reflexivity.}
-      {  simpl.
+      - reflexivity.
+      -  simpl.
          intros H1.
          rewrite -> H1.
-          reflexivity.
-      }
+         reflexivity.
      }
-
      {destruct c eqn:C.
-      {reflexivity.}
-      {simpl.
-       intros H1.
-       rewrite -> H1.
-       reflexivity.
-      }
+      - reflexivity.
+      - simpl.
+        intros H1.
+        rewrite -> H1.
+        reflexivity.
      }
   }
 Qed.
@@ -1402,6 +1398,7 @@ Proof.
   intros [].
   - reflexivity.
   - reflexivity.
+Qed.
 
 
 (** [] *)
@@ -1562,18 +1559,16 @@ Proof.
   intros H1.
   {destruct b.
    {destruct c.
-    {reflexivity.}
-    {simpl in H1.
-     rewrite -> H1.
-     reflexivity.
-    }
+    - reflexivity.
+    - simpl in H1.
+      rewrite -> H1.
+      reflexivity.
    }
    {destruct c.
-    {simpl in H1.
-     rewrite -> H1.
-     reflexivity.
-    }
-    {reflexivity.}
+    - simpl in H1.
+      rewrite -> H1.
+      reflexivity.
+    - reflexivity.
    }
   }
 
@@ -1620,7 +1615,7 @@ Fixpoint incr (m:bin) : bin :=
   match m with
   | Z => B1 Z
   | B0 n  => B1 n
-  | B1 n  => B0 m
+  | B1 n  => B0 (incr n)
   end.
 
 
@@ -1669,7 +1664,6 @@ Example test_bin_incr6 :
 Proof.
   reflexivity.
 Qed.
-(* FILL IN HERE *) Admitted.
 
 (** [] *)
 
