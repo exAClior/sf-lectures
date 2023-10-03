@@ -199,22 +199,49 @@ Proof.
 Theorem mul_0_r : forall n:nat,
   n * 0 = 0.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros n.
+  destruct n.
+  - reflexivity.
+  - simpl. rewrite <- mult_n_O. reflexivity.
+Qed.
 
 Theorem plus_n_Sm : forall n m : nat,
   S (n + m) = n + (S m).
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros n m.
+  induction n.
+  - reflexivity.
+  - simpl.
+    rewrite -> IHn.
+    reflexivity.
+Qed.
 
 Theorem add_comm : forall n m : nat,
   n + m = m + n.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros n m.
+  induction n.
+  - simpl.
+    rewrite add_0_r.
+    reflexivity.
+  - simpl.
+    rewrite IHn.
+    rewrite plus_n_Sm.
+    reflexivity.
+Qed.
+
 
 Theorem add_assoc : forall n m p : nat,
   n + (m + p) = (n + m) + p.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros n m p.
+  induction n.
+  - reflexivity.
+  - simpl.
+    rewrite -> IHn.
+    reflexivity.
+Qed.
+
 (** [] *)
 
 (** **** Exercise: 2 stars, standard (double_plus)
@@ -231,7 +258,13 @@ Fixpoint double (n:nat) :=
 
 Lemma double_plus : forall n, double n = n + n .
 Proof.
-  (* FILL IN HERE *) Admitted.
+  induction n.
+  - reflexivity.
+  - simpl.
+    rewrite IHn.
+    rewrite plus_n_Sm.
+    reflexivity.
+Qed.
 (** [] *)
 
 (** **** Exercise: 2 stars, standard (eqb_refl)
@@ -241,7 +274,13 @@ Proof.
 Theorem eqb_refl : forall n : nat,
   (n =? n) = true.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros n.
+  induction n.
+  - reflexivity.
+  - simpl.
+    rewrite -> IHn.
+    reflexivity.
+Qed.
 (** [] *)
 
 (** **** Exercise: 2 stars, standard, optional (even_S)
@@ -256,7 +295,17 @@ Proof.
 Theorem even_S : forall n : nat,
   even (S n) = negb (even n).
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros n.
+  induction n.
+  - reflexivity.
+  - rewrite IHn.
+    simpl.
+    rewrite negation_fn_applied_twice.
+    reflexivity.
+    destruct x.
+    -- reflexivity.
+    -- reflexivity.
+Qed.
 (** [] *)
 
 (** **** Exercise: 1 star, standard, optional (destruct_induction)
@@ -264,7 +313,10 @@ Proof.
     Briefly explain the difference between the tactics [destruct]
     and [induction].
 
-(* FILL IN HERE *)
+(* FILL IN HERE *) *)
+(** destruct relies on constructors already defined within an Inductive type while
+induction "destruct" the predicate into two constant values, O and n. It also
+introduces a hypothesis.
 *)
 
 (** [] *)
