@@ -512,8 +512,8 @@ Proof.
     Translate your solution for [add_comm] into an informal proof:
 
     Theorem: Addition is commutative.
-
-    Proof: (* FILL IN HERE *)
+    Proof:
+    Bluh bluh bluh
 *)
 
 (* Do not modify the following line: *)
@@ -543,7 +543,15 @@ Definition manual_grade_for_add_comm_informal : option (nat*string) := None.
 Theorem add_shuffle3 : forall n m p : nat,
   n + (m + p) = m + (n + p).
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros n m p.
+  rewrite add_assoc'.
+  rewrite add_assoc'.
+  assert (H: n + m = m + n).
+  rewrite add_comm.
+  reflexivity.
+  rewrite H.
+  reflexivity.
+Qed.
 
 (** Now prove commutativity of multiplication.  You will probably want
     to look for (or define and prove) a "helper" theorem to be used in
@@ -552,7 +560,26 @@ Proof.
 Theorem mul_comm : forall m n : nat,
   m * n = n * m.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros m n.
+  induction m.
+  - rewrite mul_0_r.
+    reflexivity.
+  - simpl.
+    assert (n + m * n = n * (1 + m)).
+    destruct m.
+    -- simpl.
+       assert (n + 0 = n).
+       rewrite add_comm.
+       reflexivity.
+       rewrite H.
+       assert ( n * 1 = n).
+
+
+
+
+
+
+
 (** [] *)
 
 (** **** Exercise: 2 stars, standard, optional (plus_leb_compat_l)
